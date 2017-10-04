@@ -36,5 +36,6 @@ dependencies {
     compile "android.arch.persistence.room:runtime:1.0.0-alpha8"
     annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha8"
     annotationProcessor "android.arch.persistence.room:compiler:1.0.0-alpha8"
+    debugCompile 'com.amitshekhar.android:debug-db:1.0.1'
     testCompile 'junit:junit:4.12'
 }
