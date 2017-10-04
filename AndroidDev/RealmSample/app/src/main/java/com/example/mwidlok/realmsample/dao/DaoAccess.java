@@ -1,5 +1,6 @@
 package com.example.mwidlok.realmsample.dao;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
@@ -18,6 +19,6 @@ public interface DaoAccess {
     void insertPerson(PersonRoom person);
 
     @Query("SELECT * FROM PersonRoom")
-    List<PersonRoom> getAllPersons();
+    LiveData<List<PersonRoom>> getAllPersons();
 
 }

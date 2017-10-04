@@ -1,10 +1,14 @@
 package com.example.mwidlok.realmsample;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.persistence.room.Room;
 import android.os.AsyncTask;
+import android.support.annotation.Nullable;
 import android.support.constraint.solver.ArrayLinkedVariables;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.example.mwidlok.realmsample.dao.DaoAccess;
@@ -26,30 +30,36 @@ public class RoomActivity extends AppCompatActivity {
         // setup database.
         // allowMainThreadQueries() möglich, aber nicht zu empfehlen.
         //myDatabase = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, "myDb").allowMainThreadQueries().build();
+
         myDatabase = Room.databaseBuilder(getApplicationContext(), MyDatabase.class, "myDb").build();
 
-        new AsyncTask<Void,Void,Boolean>()
-        {
-            final PersonRoom person = new PersonRoom("Max","Mustermann",42);
+        LiveData<List<PersonRoom>> liveDatalist = myDatabase.daoAccess().getAllPersons();
+        liveDatalist.observe(this, new Observer<List<PersonRoom>>() {
             @Override
-            protected Boolean doInBackground(Void... voids) {
-                myDatabase.daoAccess().insertPerson(person);
-                return true;
+            public void onChanged(@Nullable List<PersonRoom> personRooms) {
+                Log.i("Room Database","Data was updated.!");
             }
+        });
 
-            protected void onPostExecute()
-            {
-                // getting data from database.
-                List<PersonRoom> persons = myDatabase.daoAccess().getAllPersons();
-            }
+        // Database Access in Worker Thread.
 
-        }.execute();
-        // setup entity.
+//        new AsyncTask<Void,Void,List<PersonRoom>>()
+//        {
+//            @Override
+//            protected List<PersonRoom> doInBackground(Void... voids) {
+//                return myDatabase.daoAccess().getAllPersons();
+//
+//            }
+//        }.execute();
 
-
-        // write entity via dao in database.
-
-
-
+//        new AsyncTask<Void,Void,Boolean>()
+//        {
+//            final PersonRoom person = new PersonRoom("Max","Mustermann",42);
+//            @Override
+//            protected Boolean doInBackground(Void... voids) {
+//                myDatabase.daoAccess().insertPerson(person);
+//                return true;
+//            }
+//        }.execute();
     }
 }
