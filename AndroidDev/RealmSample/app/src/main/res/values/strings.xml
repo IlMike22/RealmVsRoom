@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">RealmSample</string>
+    <string name="btnDbInsert">Make db insert</string>
 </resources>

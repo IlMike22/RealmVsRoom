@@ -6,4 +6,11 @@
     android:layout_height="match_parent"
     tools:context="com.example.mwidlok.realmsample.RoomActivity">
 
+    <Button
+        android:id="@+id/btnSaveData"
+        android:layout_width="200dp"
+        android:layout_height="60dp"
+        android:text="@string/btnDbInsert"/>
+
+
 </android.support.constraint.ConstraintLayout>
